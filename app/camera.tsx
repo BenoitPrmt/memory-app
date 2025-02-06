@@ -1,14 +1,17 @@
 import { useRef, useState } from 'react';
-import {Text, View, StyleSheet, Image, ScrollView, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
 import {ArrowRightIcon, CameraIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
 import {HStack} from "@/components/ui/hstack";
 import TinyImage from "@/components/image/TinyImage";
 import {useRouter} from "expo-router";
+import {useStore} from "@/store/store";
 
 const Camera = () => {
     const router = useRouter();
+    const { addPhoto } = useStore();
+
     const [facing, setFacing] = useState<"front" | "back">('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [photos, setPhotos] = useState<string[]>([]);
@@ -49,6 +52,7 @@ const Camera = () => {
             });
             if (!photo) return;
             setPhotos([...photos, photo.uri]);
+            addPhoto(photo.uri);
 
             console.log(photos);
         }
