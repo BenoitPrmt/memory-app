@@ -32,29 +32,29 @@ const TinyImage = ({imageUri, index}: Props) => {
                     <ModalBody>
                         <Image key={index} source={{uri: imageUri}} style={styles.photoBig}/>
                     </ModalBody>
-                    <ModalFooter className="w-full">
-                        <Button
-                            variant="outline"
-                            action="secondary"
-                            size="sm"
-                            onPress={() => {
-                                setShowModal(false)
-                            }}
-                            className="flex-grow"
-                        >
-                            <ButtonText>Annuler</ButtonText>
-                        </Button>
-                        <Button
-                            onPress={() => {
-                                setShowModal(false)
-                            }}
-                            size="sm"
-                            className="flex-grow"
-                            action="negative"
-                        >
-                            <ButtonText>Supprimer</ButtonText>
-                        </Button>
-                    </ModalFooter>
+                    {/*<ModalFooter className="w-full">*/}
+                    {/*    <Button*/}
+                    {/*        variant="outline"*/}
+                    {/*        action="secondary"*/}
+                    {/*        size="sm"*/}
+                    {/*        onPress={() => {*/}
+                    {/*            setShowModal(false)*/}
+                    {/*        }}*/}
+                    {/*        className="flex-grow"*/}
+                    {/*    >*/}
+                    {/*        <ButtonText>Annuler</ButtonText>*/}
+                    {/*    </Button>*/}
+                    {/*    <Button*/}
+                    {/*        onPress={() => {*/}
+                    {/*            setShowModal(false)*/}
+                    {/*        }}*/}
+                    {/*        size="sm"*/}
+                    {/*        className="flex-grow"*/}
+                    {/*        action="negative"*/}
+                    {/*    >*/}
+                    {/*        <ButtonText>Supprimer</ButtonText>*/}
+                    {/*    </Button>*/}
+                    {/*</ModalFooter>*/}
                 </ModalContent>
             </Modal>
         </>

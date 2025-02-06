@@ -2,12 +2,13 @@ import { useRef, useState } from 'react';
 import {Text, View, StyleSheet, Image, ScrollView, Dimensions} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
-import {CameraIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
+import {ArrowRightIcon, CameraIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
 import {HStack} from "@/components/ui/hstack";
-import {Heading} from "@/components/ui/heading";
 import TinyImage from "@/components/image/TinyImage";
+import {useRouter} from "expo-router";
 
 const Camera = () => {
+    const router = useRouter();
     const [facing, setFacing] = useState<"front" | "back">('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [photos, setPhotos] = useState<string[]>([]);
@@ -19,8 +20,6 @@ const Camera = () => {
         },
         camera: {
             flex: 1,
-            borderWidth: 4,
-            borderColor: 'yellow',
             minHeight: Dimensions.get('window').height / 1.5,
         },
         buttonContainer: {
@@ -80,7 +79,7 @@ const Camera = () => {
     }
 
     return (
-        <View className="flex-1 bg-transparent">
+        <View className="flex-1">
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                     <HStack space="md">
@@ -96,12 +95,16 @@ const Camera = () => {
                 </View>
             </CameraView>
             {!!photos.length && (
-                <ScrollView className="pt-4">
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-3">
-                        <HStack space="md">
+                <ScrollView className="p-4">
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} className="pb-3">
+                        <HStack space="md" reversed>
                             {photos.map((photo, index) => (<TinyImage key={index} index={index} imageUri={photo} />)) }
                         </HStack>
                     </ScrollView>
+                    <Button onPress={() => router.replace('/game')}>
+                        <ButtonIcon as={ArrowRightIcon} className="mr-1" />
+                        <ButtonText>Commencer la partie avec {photos.length} photos</ButtonText>
+                    </Button>
                 </ScrollView>
             )}
         </View>
