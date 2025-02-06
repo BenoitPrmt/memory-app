@@ -101,7 +101,7 @@ export const useStore = create<Store>((set, get) => ({
             }
         };
     }),
-    getFlippedCards: () => get().memoryGame.cards.filter(card => card.flipped),
+    getFlippedCards: () => get().memoryGame.cards.filter(card => card.flipped && !card.find),
     resetFlippedCards: () => set((state) => ({
         memoryGame: {
             ...state.memoryGame,
