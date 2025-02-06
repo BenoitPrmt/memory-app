@@ -1,9 +1,8 @@
-import {Button, ButtonText} from "@/components/ui/button"
 import {
     Modal,
     ModalBackdrop,
     ModalContent,
-    ModalBody, ModalFooter,
+    ModalBody,
 } from "@/components/ui/modal"
 import React from "react"
 import {Dimensions, Image, StyleSheet, TouchableOpacity} from "react-native";

@@ -12,7 +12,7 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Heading>abc</Heading>
+      <Heading size="2xl">PixelMem</Heading>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Link href={'/camera'}>
         <Button onPress={() => router.replace('/camera')}>

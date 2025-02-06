@@ -10,11 +10,10 @@ import {useStore} from "@/store/store";
 
 const Camera = () => {
     const router = useRouter();
-    const { addPhoto } = useStore();
+    const { addPhoto, photos, uriToPhoto, setMemoryGame, buildMemoryGame, memoryGame } = useStore();
 
     const [facing, setFacing] = useState<"front" | "back">('back');
     const [permission, requestPermission] = useCameraPermissions();
-    const [photos, setPhotos] = useState<string[]>([]);
     const cameraRef = useRef<CameraView>(null);
     const styles = StyleSheet.create({
         message: {
@@ -51,7 +50,6 @@ const Camera = () => {
                 base64: true
             });
             if (!photo) return;
-            setPhotos([...photos, photo.uri]);
             addPhoto(photo.uri);
 
             console.log(photos);
@@ -82,6 +80,18 @@ const Camera = () => {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
 
+    const handleStartGame = () => {
+
+        const memoryPhotos = photos.map(uriToPhoto);
+        setMemoryGame({
+            ...memoryGame,
+            cards: memoryPhotos
+        });
+        buildMemoryGame();
+
+        router.replace('/game');
+    };
+
     return (
         <View className="flex-1">
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
@@ -105,7 +115,7 @@ const Camera = () => {
                             {photos.map((photo, index) => (<TinyImage key={index} index={index} imageUri={photo} />)) }
                         </HStack>
                     </ScrollView>
-                    <Button onPress={() => router.replace('/game')}>
+                    <Button onPress={handleStartGame}>
                         <ButtonIcon as={ArrowRightIcon} className="mr-1" />
                         <ButtonText>Commencer la partie avec {photos.length} photos</ButtonText>
                     </Button>
