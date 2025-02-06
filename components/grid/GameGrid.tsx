@@ -20,9 +20,9 @@ const GameGrid = () => {
     return (
         <View>
             <VStack space="md">
-                {lines.map((line, index) => (
+                {lines.map((line: Photo[], index) => (
                     <HStack key={index} space="md">
-                        {line.map((cell) => (
+                        {line.map((cell: Photo) => (
                             <FlipCard image={cell} key={cell.id} />
                         ))}
                     </HStack>

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 import {View} from '@/components/Themed';
 import {Heading} from "@/components/ui/heading";
-import {Button, ButtonIcon} from "@/components/ui/button";
+import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {DoorOpenIcon} from "lucide-react-native";
 import {useRouter} from "expo-router";
 import {useStore} from "@/store/store";
@@ -23,8 +23,9 @@ export default function TabOneScreen() {
 
             <GameGrid/>
 
-            <Button onPress={() => router.replace('/')}>
+            <Button onPress={() => router.replace('/')} className={'mt-4'}>
                 <ButtonIcon as={DoorOpenIcon}/>
+                <ButtonText>Retour</ButtonText>
             </Button>
         </View>
     );

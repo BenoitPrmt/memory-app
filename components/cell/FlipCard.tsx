@@ -1,44 +1,39 @@
-import React, { useState } from "react";
-import {Image, Pressable} from "react-native";
+import React, { useEffect } from "react";
+import { Image, Pressable } from "react-native";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withTiming,
     interpolate
 } from "react-native-reanimated";
-import {Box} from "@/components/ui/box";
-import {Photo, useStore} from "@/store/store";
+import { Box } from "@/components/ui/box";
+import { Photo, useStore } from "@/store/store";
 
 type Props = {
     image: Photo;
-}
+};
 
 const FlipCard = ({ image }: Props) => {
-    const { flipCard } = useStore();
+    const { flipCard, memoryGame } = useStore();
     const rotate = useSharedValue(0);
-    const [isFlipped, setIsFlipped] = useState<boolean>(image.flipped);
+
+    const isFlipped = memoryGame.cards.find(card => card.id === image.id)?.flipped || false;
+
+    useEffect(() => {
+        rotate.value = withTiming(isFlipped ? 180 : 0, { duration: 500 });
+    }, [isFlipped]);
 
     const handleFlip = () => {
-        if (isFlipped) {
-            rotate.value = withTiming(0, { duration: 500 });
-        } else {
-            rotate.value = withTiming(180, { duration: 500 });
-        }
-        setIsFlipped(!isFlipped);
         flipCard(image.id);
     };
 
     const animatedFrontStyle = useAnimatedStyle(() => ({
-        transform: [
-            { rotateY: `${interpolate(rotate.value, [0, 180], [0, 180])}deg` },
-        ],
+        transform: [{ rotateY: `${interpolate(rotate.value, [0, 180], [0, 180])}deg` }],
         opacity: interpolate(rotate.value, [0, 90, 180], [1, 0, 1]),
     }));
 
     const animatedBackStyle = useAnimatedStyle(() => ({
-        transform: [
-            { rotateY: `${interpolate(rotate.value, [0, 180], [180, 360])}deg` },
-        ],
+        transform: [{ rotateY: `${interpolate(rotate.value, [0, 180], [180, 360])}deg` }],
         opacity: interpolate(rotate.value, [0, 90, 180], [1, 0, 1]),
     }));
 
@@ -46,8 +41,7 @@ const FlipCard = ({ image }: Props) => {
 
     return (
         <Pressable onPress={handleFlip}>
-            <Box className={"relative w-32 h-32"}>
-                {/* Dos de la carte */}
+            <Box className="relative w-20 h-20">
                 <Animated.View
                     style={[
                         {
@@ -63,8 +57,6 @@ const FlipCard = ({ image }: Props) => {
                         animatedFrontStyle,
                     ]}
                 />
-
-                {/* Face de la carte */}
                 <Animated.View
                     style={[
                         {
@@ -81,7 +73,7 @@ const FlipCard = ({ image }: Props) => {
                 >
                     <Image
                         source={{ uri: image.uri }}
-                        className={"w-full h-full rounded-lg"}
+                        className="w-full h-full rounded-lg"
                     />
                 </Animated.View>
             </Box>
