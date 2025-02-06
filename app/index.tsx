@@ -1,14 +1,25 @@
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
+import {Heading} from "@/components/ui/heading";
+import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
+import {Link} from "@/components/ui/link";
+import {PlayIcon} from "lucide-react-native";
+import {useRouter} from "expo-router";
 
 export default function TabOneScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <Heading>abc</Heading>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Link href={'/camera'}>
+        <Button onPress={() => router.push('/camera')}>
+          <ButtonIcon as={PlayIcon} className="mr-1" />
+          <ButtonText>Lancer une partie</ButtonText>
+        </Button>
+      </Link>
     </View>
   );
 }
