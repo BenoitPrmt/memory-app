@@ -20,7 +20,7 @@ const FlipCard = ({ image }: Props) => {
     let cardStyle = 'relative w-12 h-12';
     switch (memoryGame.size) {
         case 2:
-            cardStyle = 'relative w-30 h-30';
+            cardStyle = 'relative w-32 h-32';
             break;
         case 4:
             cardStyle = 'relative w-20 h-20';
