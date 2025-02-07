@@ -174,6 +174,7 @@ module.exports = {
         body: undefined,
         mono: undefined,
         roboto: ['Roboto', 'sans-serif'],
+        chillax: ['Chillax', 'Roboto', 'sans-serif']
       },
       fontWeight: {
         extrablack: '950',

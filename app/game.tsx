@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {View} from '@/components/Themed';
 import {Heading} from "@/components/ui/heading";
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
-import {Text} from "@/components/ui/text";
 import {DoorOpenIcon} from "lucide-react-native";
 import {useRouter} from "expo-router";
 import {useStore} from "@/store/store";

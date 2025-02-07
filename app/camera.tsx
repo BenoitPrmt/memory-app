@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
-import {ArrowRightIcon, CameraIcon, DoorOpenIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
+import {ArrowRightIcon, CameraIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
 import {HStack} from "@/components/ui/hstack";
 import TinyImage from "@/components/image/TinyImage";
 import {useRouter} from "expo-router";
@@ -91,8 +91,7 @@ const Camera = () => {
                 <View style={styles.buttonContainer}>
                     <HStack space="md">
                         <Button onPress={toggleCameraFacing}>
-                            <ButtonIcon as={SwitchCameraIcon} className="mr-1" />
-                            <ButtonText>Flip</ButtonText>
+                            <ButtonIcon as={SwitchCameraIcon} />
                         </Button>
                         <Button onPress={takePhoto} disabled={((memoryGame.size ** 2) / 2) === photos.length} action={((memoryGame.size ** 2) / 2) === photos.length ? 'secondary' : 'primary'}>
                             <ButtonIcon as={CameraIcon} className="mr-1" />

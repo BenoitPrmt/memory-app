@@ -3,44 +3,7 @@ import { Audio } from "expo-av";
 import uuid from 'react-native-uuid';
 import * as Haptics from 'expo-haptics'
 import {SOUND_FILES} from "@/constants/Sounds";
-
-export type Photo = {
-    id: string;
-    uri: string;
-    flipped: boolean;
-    find?: boolean;
-};
-
-export type MemoryGame = {
-    cards: Photo[];
-    size: number;
-    victory: boolean;
-}
-
-export type Store = {
-    photos: string[];
-    addPhoto: (photo: string) => void;
-    removePhoto: (photo: string) => void;
-    uriToPhoto: (uri: string) => Photo;
-    memoryGame: MemoryGame;
-    setMemoryGame: (memoryGame: MemoryGame) => void;
-    buildMemoryGame: () => void;
-    setGameSize: (size: number) => void;
-    flipCard: (id: string) => void;
-    getFlippedCards: () => Photo[];
-    resetFlippedCards: () => void;
-    checkPair: () => void;
-    resetGame: () => void;
-    resetGameBoard: () => void;
-    setFinded: (id: string) => void;
-    checkWin: () => void;
-
-    sounds: any;
-    preloadSounds: () => void;
-    playSound: (key: string, volume?: number) => void;
-};
-
-// TODO: Double cards to create pairs, Shuffle cards, Create a game loop
+import {MemoryGame, Store} from "@/types/store";
 
 export const useStore = create<Store>((set, get) => ({
     photos: [],

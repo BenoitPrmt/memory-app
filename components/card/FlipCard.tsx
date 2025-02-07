@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { Image, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -7,10 +7,13 @@ import Animated, {
     interpolate
 } from "react-native-reanimated";
 import { Box } from "@/components/ui/box";
-import { Photo, useStore } from "@/store/store";
+import { useStore } from "@/store/store";
+import {FlipCard as FlipCardType} from "@/types/store";
+import {LinearGradient} from "expo-linear-gradient";
+import {Image} from "@/components/ui/image";
 
 type Props = {
-    image: Photo;
+    image: FlipCardType;
 };
 
 const FlipCard = ({ image }: Props) => {
@@ -51,8 +54,6 @@ const FlipCard = ({ image }: Props) => {
         opacity: interpolate(rotate.value, [0, 90, 180], [1, 0, 1]),
     }));
 
-    // TODO: Ajouter un bruit de papier qui se retourne
-
     return (
         <Pressable onPress={handleFlip}>
             <Box className={cardStyle}>
@@ -70,7 +71,21 @@ const FlipCard = ({ image }: Props) => {
                         },
                         animatedFrontStyle,
                     ]}
-                />
+                >
+                    <LinearGradient
+                        colors={['#dd4566', '#f97497', '#ff92be', '#ffb3d8']}
+                        start={[0, 0]}
+                        end={[1, 1]}
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            height: '100%',
+                            borderRadius: 10
+                        }}
+                    />
+                </Animated.View>
                 <Animated.View
                     style={[
                         {
