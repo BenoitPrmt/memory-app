@@ -22,11 +22,14 @@ import {useRouter} from "expo-router";
 
 const GameGrid = () => {
     const router = useRouter();
-    const { memoryGame, resetGame, resetGameBoard } = useStore();
+    const { memoryGame, resetGame, resetGameBoard, playSound } = useStore();
     const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
         setShowModal(memoryGame.victory);
+        if (memoryGame.victory) {
+            playSound('victory');
+        }
     }, [memoryGame.victory]);
 
     // const { gridGap } = useGameParam();

@@ -1,6 +1,8 @@
 import { create } from "zustand";
+import { Audio } from "expo-av";
 import uuid from 'react-native-uuid';
 import * as Haptics from 'expo-haptics'
+import {SOUND_FILES} from "@/constants/Sounds";
 
 export type Photo = {
     id: string;
@@ -32,6 +34,10 @@ export type Store = {
     resetGameBoard: () => void;
     setFinded: (id: string) => void;
     checkWin: () => void;
+
+    sounds: any;
+    preloadSounds: () => void;
+    playSound: (key: string, volume?: number) => void;
 };
 
 // TODO: Double cards to create pairs, Shuffle cards, Create a game loop
@@ -88,6 +94,8 @@ export const useStore = create<Store>((set, get) => ({
             return state;
         }
 
+        get().playSound('paper');
+
         const newCards = state.memoryGame.cards.map(c =>
             c.id === id ? { ...c, flipped: true } : c
         );
@@ -121,6 +129,7 @@ export const useStore = create<Store>((set, get) => ({
 
         if (flippedCards.length === 2 && flippedCards[0].uri === flippedCards[1].uri) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            get().playSound('pair', 0.2);
             get().setFinded(flippedCards[0].id);
             get().setFinded(flippedCards[1].id);
             get().checkWin();
@@ -169,4 +178,22 @@ export const useStore = create<Store>((set, get) => ({
             }
         };
     }),
+
+
+    sounds: {},
+    preloadSounds: async () => {
+        const loadedSounds: { [key: string]: Audio.Sound } = {};
+        for (const key in SOUND_FILES) {
+            const { sound } = await Audio.Sound.createAsync(SOUND_FILES[key as keyof typeof SOUND_FILES], { shouldPlay: false });
+            loadedSounds[key] = sound;
+        }
+        set({ sounds: loadedSounds });
+    },
+    playSound: async (key :string, volume?: number) => {
+        const sound = get().sounds[key];
+        if (sound) {
+            if (volume) await sound.setVolumeAsync(volume);
+            await sound.replayAsync();
+        }
+    },
 }));

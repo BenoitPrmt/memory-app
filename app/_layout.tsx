@@ -9,6 +9,7 @@ import {useEffect} from 'react';
 import 'react-native-reanimated';
 
 import {useColorScheme} from '@/components/useColorScheme';
+import {useStore} from "@/store/store";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -49,6 +50,12 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
+
+    const { preloadSounds } = useStore();
+
+    useEffect(() => {
+        preloadSounds();
+    }, []);
 
     return (
         <GluestackUIProvider mode="light">

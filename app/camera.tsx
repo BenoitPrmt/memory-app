@@ -80,12 +80,6 @@ const Camera = () => {
     }
 
     const handleStartGame = () => {
-
-        const memoryPhotos = photos.map(uriToPhoto);
-        setMemoryGame({
-            ...memoryGame,
-            cards: memoryPhotos
-        });
         buildMemoryGame();
 
         router.replace('/game');
