@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
 import {ArrowRightIcon, CameraIcon, DoorOpenIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
@@ -89,22 +89,19 @@ const Camera = () => {
         <View className="flex-1">
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
-                    <HStack space="md">
-                        <Button onPress={() => router.replace('/')}>
+                    <View className="items-center flex-row justify-between w-[80%]">
+                        <Button onPress={() => router.replace('/')} className={"rounded-full"}>
                             <ButtonIcon as={DoorOpenIcon} />
                         </Button>
 
-                        <Button onPress={takePhoto} disabled={((memoryGame.size ** 2) / 2) === photos.length} action={((memoryGame.size ** 2) / 2) === photos.length ? 'secondary' : 'primary'}>
-                            <ButtonIcon as={CameraIcon} className="mr-1" />
-                            <ButtonText>
-                                {((memoryGame.size ** 2) / 2) === photos.length ? `${photos.length} photos sur ${(memoryGame.size ** 2) / 2} max.` : 'Prendre une photo'}
-                            </ButtonText>
-                        </Button>
+                        <TouchableOpacity onPress={takePhoto} disabled={((memoryGame.size ** 2) / 2) === photos.length}>
+                            <View className={`w-24 h-24 rounded-full border-4 border-primary-0 ${((memoryGame.size ** 2) / 2) === photos.length ? 'border-primary-0 bg-zinc-300' : 'bg-white border-zinc-300'}`}/>
+                            </TouchableOpacity>
 
-                        <Button onPress={toggleCameraFacing}>
+                        <Button onPress={toggleCameraFacing} className={"rounded-full"}>
                             <ButtonIcon as={SwitchCameraIcon} />
                         </Button>
-                    </HStack>
+                    </View>
                 </View>
             </CameraView>
             {!!photos.length && (
@@ -120,7 +117,7 @@ const Camera = () => {
                     </Button>
                     <Alert action="info" variant="solid" className="rounded-xl mt-2">
                         <AlertIcon as={InfoIcon} />
-                        <AlertText>{(memoryGame.size ** 2) / 2} photos maximum pour ce mode de jeu</AlertText>
+                        <AlertText>Prenez jusqu'à {(memoryGame.size ** 2) / 2} photos pour ce mode de jeu</AlertText>
                     </Alert>
                 </ScrollView>
             )}

@@ -29,6 +29,7 @@ const VictoryModal = ({ showModal, setShowModal, handleQuit, handleRestartGame }
                 setShowModal(false)
             }}
             size="md"
+            closeOnOverlayClick={false}
         >
             <ModalBackdrop />
             <ModalContent>
@@ -49,7 +50,7 @@ const VictoryModal = ({ showModal, setShowModal, handleQuit, handleRestartGame }
                         Vous avez gagné !
                     </Text>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter className="flex justify-center space-x-2">
                     <Button
                         action="secondary"
                         onPress={handleQuit}
