@@ -2,11 +2,12 @@ import { useRef, useState } from 'react';
 import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
-import {ArrowRightIcon, CameraIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
+import {ArrowRightIcon, CameraIcon, DoorOpenIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
 import {HStack} from "@/components/ui/hstack";
 import TinyImage from "@/components/image/TinyImage";
 import {useRouter} from "expo-router";
 import {useStore} from "@/store/store";
+import {Alert, AlertIcon, AlertText} from "@/components/ui/alert";
 
 const Camera = () => {
     const router = useRouter();
@@ -30,7 +31,7 @@ const Camera = () => {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'flex-end',
-            marginBottom: 50,
+            marginBottom: 30,
         },
         text: {
             fontSize: 24,
@@ -101,9 +102,11 @@ const Camera = () => {
                             <ButtonIcon as={SwitchCameraIcon} className="mr-1" />
                             <ButtonText>Flip</ButtonText>
                         </Button>
-                        <Button onPress={takePhoto}>
+                        <Button onPress={takePhoto} disabled={((memoryGame.size ** 2) / 2) === photos.length} action={((memoryGame.size ** 2) / 2) === photos.length ? 'secondary' : 'primary'}>
                             <ButtonIcon as={CameraIcon} className="mr-1" />
-                            <ButtonText>Prendre une photo</ButtonText>
+                            <ButtonText>
+                                {((memoryGame.size ** 2) / 2) === photos.length ? `${photos.length} photos sur ${(memoryGame.size ** 2) / 2} max.` : 'Prendre une photo'}
+                            </ButtonText>
                         </Button>
                     </HStack>
                 </View>
@@ -119,6 +122,10 @@ const Camera = () => {
                         <ButtonIcon as={ArrowRightIcon} className="mr-1" />
                         <ButtonText>Commencer la partie avec {photos.length} photo{photos.length > 1 ? 's' : ''}</ButtonText>
                     </Button>
+                    <Alert action="info" variant="solid" className="rounded-xl mt-2">
+                        <AlertIcon as={InfoIcon} />
+                        <AlertText>{(memoryGame.size ** 2) / 2} photos maximum pour ce mode de jeu</AlertText>
+                    </Alert>
                 </ScrollView>
             )}
         </View>
