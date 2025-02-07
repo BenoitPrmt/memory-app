@@ -18,7 +18,6 @@ type Props = {
 
 const FlipCard = ({ image }: Props) => {
     const { flipCard, memoryGame } = useStore();
-    // const { cardSize } = useGameParam();
     let cardStyle = 'relative w-12 h-12';
     switch (memoryGame.size) {
         case 2:

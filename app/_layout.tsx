@@ -61,7 +61,7 @@ function RootLayoutNav() {
                     <Stack.Screen name="index" options={{headerShown: false}}/>
                     <Stack.Screen name="camera" options={{headerShown: false}}/>
                     <Stack.Screen name="game" options={{headerShown: false}}/>
-                    <Stack.Screen name="modal" options={{presentation: 'modal'}}/>
+                    <Stack.Screen name="modal" options={{presentation: 'modal', headerShown: false}}/>
                 </Stack>
             </ThemeProvider>
         </GluestackUIProvider>

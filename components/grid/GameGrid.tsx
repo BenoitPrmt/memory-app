@@ -20,8 +20,6 @@ const GameGrid = () => {
         }
     }, [memoryGame.victory]);
 
-    // const { gridGap } = useGameParam();
-
     let gridGap: 'sm' | 'md' | 'lg' = 'md';
     switch (memoryGame.size) {
         case 2:
