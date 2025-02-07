@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {View} from '@/components/Themed';
 import {Heading} from "@/components/ui/heading";
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
+import {Text} from "@/components/ui/text";
 import {DoorOpenIcon} from "lucide-react-native";
 import {useRouter} from "expo-router";
 import {useStore} from "@/store/store";
@@ -18,8 +19,10 @@ export default function TabOneScreen() {
 
     return (
         <View style={styles.container}>
-            <Heading>Game</Heading>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
+            <View>
+                <Heading size={"2xl"}>PixelMem</Heading>
+                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
+            </View>
 
             <GameGrid/>
 
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
     },
     title: {
         fontSize: 20,

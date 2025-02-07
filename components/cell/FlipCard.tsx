@@ -8,7 +8,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { Box } from "@/components/ui/box";
 import { Photo, useStore } from "@/store/store";
-import {useGameParam} from "@/hooks/useGameParam";
 
 type Props = {
     image: Photo;

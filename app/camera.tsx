@@ -52,8 +52,6 @@ const Camera = () => {
             });
             if (!photo) return;
             addPhoto(photo.uri);
-
-            console.log(photos);
         }
     };
 

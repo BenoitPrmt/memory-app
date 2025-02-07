@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import uuid from 'react-native-uuid';
+import * as Haptics from 'expo-haptics'
 
 export type Photo = {
     id: string;
@@ -11,6 +12,7 @@ export type Photo = {
 export type MemoryGame = {
     cards: Photo[];
     size: number;
+    victory: boolean;
 }
 
 export type Store = {
@@ -27,6 +29,7 @@ export type Store = {
     resetFlippedCards: () => void;
     checkPair: () => void;
     resetGame: () => void;
+    resetGameBoard: () => void;
     setFinded: (id: string) => void;
     checkWin: () => void;
 };
@@ -48,6 +51,7 @@ export const useStore = create<Store>((set, get) => ({
     memoryGame: {
         cards: [],
         size: 4,
+        victory: false
     },
     setMemoryGame: (memoryGame: MemoryGame) => set({ memoryGame }),
     buildMemoryGame: () => set((state) => {
@@ -116,6 +120,7 @@ export const useStore = create<Store>((set, get) => ({
         const flippedCards = get().getFlippedCards();
 
         if (flippedCards.length === 2 && flippedCards[0].uri === flippedCards[1].uri) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             get().setFinded(flippedCards[0].id);
             get().setFinded(flippedCards[1].id);
             get().checkWin();
@@ -126,7 +131,21 @@ export const useStore = create<Store>((set, get) => ({
         }
     },
     resetGame: () => set((state) => {
-        state.memoryGame.cards = [];
+        state.memoryGame = {
+            cards: [],
+            size: 4,
+            victory: false
+        };
+        return state;
+    }),
+    resetGameBoard: () => set((state) => {
+        state.memoryGame = {
+            ...state.memoryGame,
+            cards: state.memoryGame.cards.map(card =>
+                ({ ...card, find: false, flipped: false })
+            ),
+            victory: false
+        };
         return state;
     }),
     setFinded: (id: string) => set((state) => ({
@@ -141,10 +160,13 @@ export const useStore = create<Store>((set, get) => ({
         state.memoryGame.size = size;
         return state;
     }),
-    checkWin: () => {
+    checkWin: () => set((state) => {
         const findedCards = get().memoryGame.cards.filter(card => card.find);
-        if (findedCards.length === get().memoryGame.cards.length) {
-            alert('You win');
-        }
-    },
+        return {
+            memoryGame: {
+                ...state.memoryGame,
+                victory: findedCards.length === get().memoryGame.cards.length
+            }
+        };
+    }),
 }));
