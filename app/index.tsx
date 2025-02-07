@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 import { View } from '@/components/Themed';
 import {Heading} from "@/components/ui/heading";
@@ -9,6 +9,7 @@ import {useRouter} from "expo-router";
 import {HStack} from "@/components/ui/hstack";
 import {useState} from "react";
 import {useStore} from "@/store/store";
+import Logo from "@/components/assets/logo";
 
 export default function TabOneScreen() {
   const router = useRouter();
@@ -21,35 +22,34 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Heading size="2xl">PixelMem</Heading>
+    <SafeAreaView style={styles.container} className="bg-white">
+      <Logo />
 
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View>
+        <HStack space="md" className="mb-5">
 
-      <HStack space="md" className="mb-3">
+          <Button onPress={() => setGamemode(2)} variant={gamemode === 2 ? 'solid' : 'outline'}>
+            <ButtonText>2x2</ButtonText>
+          </Button>
 
-        <Button onPress={() => setGamemode(2)} variant={gamemode === 2 ? 'solid' : 'outline'}>
-          <ButtonText>2x2</ButtonText>
-        </Button>
+          <Button onPress={() => setGamemode(4)} variant={gamemode === 4 ? 'solid' : 'outline'}>
+            <ButtonText>4x4</ButtonText>
+          </Button>
 
-        <Button onPress={() => setGamemode(4)} variant={gamemode === 4 ? 'solid' : 'outline'}>
-          <ButtonText>4x4</ButtonText>
-        </Button>
-
-        <Button onPress={() => setGamemode(6)} variant={gamemode === 6 ? 'solid' : 'outline'}>
-          <ButtonText>6x6</ButtonText>
-        </Button>
-
-      </HStack>
+          <Button onPress={() => setGamemode(6)} variant={gamemode === 6 ? 'solid' : 'outline'}>
+            <ButtonText>6x6</ButtonText>
+          </Button>
+        </HStack>
 
 
-      <Link href={'/camera'}>
-        <Button onPress={handleStartGame}>
-          <ButtonIcon as={PlayIcon} className="mr-1" />
-          <ButtonText>Lancer une partie</ButtonText>
-        </Button>
-      </Link>
-    </View>
+        <Link href={'/camera'} className="h-[100px]">
+          <Button onPress={handleStartGame}>
+            <ButtonIcon as={PlayIcon} className="mr-1" />
+            <ButtonText>Lancer une partie</ButtonText>
+          </Button>
+        </Link>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around'
   },
   title: {
     fontSize: 20,

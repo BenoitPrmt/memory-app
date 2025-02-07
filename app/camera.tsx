@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {Button, ButtonIcon, ButtonText} from "@/components/ui/button";
 import {CameraView, useCameraPermissions} from 'expo-camera';
-import {ArrowRightIcon, CameraIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
+import {ArrowRightIcon, CameraIcon, DoorOpenIcon, InfoIcon, LockIcon, SwitchCameraIcon} from "lucide-react-native";
 import {HStack} from "@/components/ui/hstack";
 import TinyImage from "@/components/image/TinyImage";
 import {useRouter} from "expo-router";
@@ -90,14 +90,19 @@ const Camera = () => {
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                     <HStack space="md">
-                        <Button onPress={toggleCameraFacing}>
-                            <ButtonIcon as={SwitchCameraIcon} />
+                        <Button onPress={() => router.replace('/')}>
+                            <ButtonIcon as={DoorOpenIcon} />
                         </Button>
+
                         <Button onPress={takePhoto} disabled={((memoryGame.size ** 2) / 2) === photos.length} action={((memoryGame.size ** 2) / 2) === photos.length ? 'secondary' : 'primary'}>
                             <ButtonIcon as={CameraIcon} className="mr-1" />
                             <ButtonText>
                                 {((memoryGame.size ** 2) / 2) === photos.length ? `${photos.length} photos sur ${(memoryGame.size ** 2) / 2} max.` : 'Prendre une photo'}
                             </ButtonText>
+                        </Button>
+
+                        <Button onPress={toggleCameraFacing}>
+                            <ButtonIcon as={SwitchCameraIcon} />
                         </Button>
                     </HStack>
                 </View>
