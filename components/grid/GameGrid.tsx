@@ -7,6 +7,20 @@ import FlipCard from "@/components/cell/FlipCard";
 
 const GameGrid = () => {
     const { memoryGame } = useStore();
+    // const { gridGap } = useGameParam();
+
+    let gridGap: 'sm' | 'md' | 'lg' = 'md';
+    switch (memoryGame.size) {
+        case 2:
+            gridGap = 'lg';
+            break;
+        case 4:
+            gridGap = 'md';
+            break;
+        case 8:
+            gridGap = 'sm';
+            break;
+    }
 
     const lines: Photo[][] = [];
     for (let i = 0; i < memoryGame.size; i++) {
@@ -19,9 +33,9 @@ const GameGrid = () => {
 
     return (
         <View>
-            <VStack space="md">
+            <VStack space={gridGap}>
                 {lines.map((line: Photo[], index) => (
-                    <HStack key={index} space="md">
+                    <HStack key={index} space={gridGap}>
                         {line.map((cell: Photo) => (
                             <FlipCard image={cell} key={cell.id} />
                         ))}

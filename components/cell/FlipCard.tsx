@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { Image, Pressable } from "react-native";
 import Animated, {
     useSharedValue,
@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Box } from "@/components/ui/box";
 import { Photo, useStore } from "@/store/store";
+import {useGameParam} from "@/hooks/useGameParam";
 
 type Props = {
     image: Photo;
@@ -15,6 +16,20 @@ type Props = {
 
 const FlipCard = ({ image }: Props) => {
     const { flipCard, memoryGame } = useStore();
+    // const { cardSize } = useGameParam();
+    let cardSize = 'relative w-12 h-12';
+    switch (memoryGame.size) {
+        case 2:
+            cardSize = 'relative w-30 h-30';
+            break;
+        case 4:
+            cardSize = 'relative w-20 h-20';
+            break;
+        case 6:
+            cardSize = 'relative w-12 h-12';
+            break;
+    }
+
     const rotate = useSharedValue(0);
 
     const isFlipped = memoryGame.cards.find(card => card.id === image.id)?.flipped || false;
@@ -41,7 +56,7 @@ const FlipCard = ({ image }: Props) => {
 
     return (
         <Pressable onPress={handleFlip}>
-            <Box className="relative w-20 h-20">
+            <Box className={cardSize}>
                 <Animated.View
                     style={[
                         {
