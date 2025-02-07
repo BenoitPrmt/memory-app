@@ -16,6 +16,7 @@ export type MemoryGame = {
 export type Store = {
     photos: string[];
     addPhoto: (photo: string) => void;
+    removePhoto: (photo: string) => void;
     uriToPhoto: (uri: string) => Photo;
     memoryGame: MemoryGame;
     setMemoryGame: (memoryGame: MemoryGame) => void;
@@ -35,6 +36,7 @@ export type Store = {
 export const useStore = create<Store>((set, get) => ({
     photos: [],
     addPhoto: (photo: string) => set((state) => ({ photos: [...state.photos, photo] })),
+    removePhoto: (photo: string) => set((state) => ({ photos: state.photos.filter((p) => p != photo) })),
     uriToPhoto: (uri: string) => {
         const id = uuid.v4();
         return {

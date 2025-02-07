@@ -115,9 +115,9 @@ const Camera = () => {
                             {photos.map((photo, index) => (<TinyImage key={index} index={index} imageUri={photo} />)) }
                         </HStack>
                     </ScrollView>
-                    <Button onPress={handleStartGame}>
+                    <Button onPress={handleStartGame} disabled={photos.length < 2} action={photos.length < 2 ? 'secondary' : 'primary'}>
                         <ButtonIcon as={ArrowRightIcon} className="mr-1" />
-                        <ButtonText>Commencer la partie avec {photos.length} photos</ButtonText>
+                        <ButtonText>Commencer la partie avec {photos.length} photo{photos.length > 1 ? 's' : ''}</ButtonText>
                     </Button>
                 </ScrollView>
             )}

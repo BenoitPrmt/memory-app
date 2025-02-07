@@ -2,10 +2,12 @@ import {
     Modal,
     ModalBackdrop,
     ModalContent,
-    ModalBody,
+    ModalBody, ModalFooter,
 } from "@/components/ui/modal"
 import React from "react"
 import {Dimensions, Image, StyleSheet, TouchableOpacity} from "react-native";
+import {Button, ButtonText} from "@/components/ui/button";
+import {useStore} from "@/store/store";
 
 type Props = {
     imageUri: string;
@@ -13,7 +15,8 @@ type Props = {
 }
 
 const TinyImage = ({imageUri, index}: Props) => {
-    const [showModal, setShowModal] = React.useState(false)
+    const { removePhoto } = useStore();
+    const [showModal, setShowModal] = React.useState(false);
     return (
         <>
             <TouchableOpacity onPress={() => setShowModal(true)}>
@@ -31,29 +34,30 @@ const TinyImage = ({imageUri, index}: Props) => {
                     <ModalBody>
                         <Image key={index} source={{uri: imageUri}} style={styles.photoBig}/>
                     </ModalBody>
-                    {/*<ModalFooter className="w-full">*/}
-                    {/*    <Button*/}
-                    {/*        variant="outline"*/}
-                    {/*        action="secondary"*/}
-                    {/*        size="sm"*/}
-                    {/*        onPress={() => {*/}
-                    {/*            setShowModal(false)*/}
-                    {/*        }}*/}
-                    {/*        className="flex-grow"*/}
-                    {/*    >*/}
-                    {/*        <ButtonText>Annuler</ButtonText>*/}
-                    {/*    </Button>*/}
-                    {/*    <Button*/}
-                    {/*        onPress={() => {*/}
-                    {/*            setShowModal(false)*/}
-                    {/*        }}*/}
-                    {/*        size="sm"*/}
-                    {/*        className="flex-grow"*/}
-                    {/*        action="negative"*/}
-                    {/*    >*/}
-                    {/*        <ButtonText>Supprimer</ButtonText>*/}
-                    {/*    </Button>*/}
-                    {/*</ModalFooter>*/}
+                    <ModalFooter className="w-full">
+                        <Button
+                            variant="outline"
+                            action="secondary"
+                            size="sm"
+                            onPress={() => {
+                                setShowModal(false)
+                            }}
+                            className="flex-grow"
+                        >
+                            <ButtonText>Annuler</ButtonText>
+                        </Button>
+                        <Button
+                            onPress={() => {
+                                removePhoto(imageUri)
+                                setShowModal(false)
+                            }}
+                            size="sm"
+                            className="flex-grow"
+                            action="negative"
+                        >
+                            <ButtonText>Supprimer</ButtonText>
+                        </Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

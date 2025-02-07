@@ -17,16 +17,16 @@ type Props = {
 const FlipCard = ({ image }: Props) => {
     const { flipCard, memoryGame } = useStore();
     // const { cardSize } = useGameParam();
-    let cardSize = 'relative w-12 h-12';
+    let cardStyle = 'relative w-12 h-12';
     switch (memoryGame.size) {
         case 2:
-            cardSize = 'relative w-30 h-30';
+            cardStyle = 'relative w-30 h-30';
             break;
         case 4:
-            cardSize = 'relative w-20 h-20';
+            cardStyle = 'relative w-20 h-20';
             break;
         case 6:
-            cardSize = 'relative w-12 h-12';
+            cardStyle = 'relative w-12 h-12';
             break;
     }
 
@@ -56,7 +56,7 @@ const FlipCard = ({ image }: Props) => {
 
     return (
         <Pressable onPress={handleFlip}>
-            <Box className={cardSize}>
+            <Box className={cardStyle}>
                 <Animated.View
                     style={[
                         {
